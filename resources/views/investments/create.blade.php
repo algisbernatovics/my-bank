@@ -8,14 +8,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
-                @if(!isset(Auth::user()['two_factor_confirmed_at']))
-                    <div class="p-6 bg-white border-b border-gray-200 content-normal">
-                        <p class="font-semibold">
-                            Please enable two factor authentication first.
-                        </p>
-                    </div>
-                @endif
-
                 @if(isset($cryptoCurrencys))
 
                     <div class="overflow-x-auto">
