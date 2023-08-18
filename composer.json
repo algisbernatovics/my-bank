@@ -16,8 +16,9 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "ext-http": "*",
-      "ext-json": "*",
-        "ext-simplexml": "*"
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "ext-redis": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -23,5 +23,4 @@ class AccountBalance
     {
         return $this->funds;
     }
-
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TransferController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,5 +75,14 @@ Route::post('/investments/{acc_number}/buy/{symbol}', function (string $acc_numb
 Route::get('/investments/{acc_number}', function (string $acc_number) {
     return (new InvestmentController())->showCrypto($acc_number);
 })->middleware(['auth'])->name('investments');
+
+////////////////////////////////////////////////////
+//Test Routes///////////////////////////////////////
+////////////////////////////////////////////////////
+
+Route::get('/test-redis-counter', function () {
+    $counter = Redis::incr('counter_key');
+    return "Counter value: $counter";
+});
 
 require __DIR__ . '/auth.php';
