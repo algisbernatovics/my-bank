@@ -15,7 +15,6 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "ext-http": "*",
         "ext-json": "*",
         "ext-simplexml": "*",
         "ext-redis": "*"
