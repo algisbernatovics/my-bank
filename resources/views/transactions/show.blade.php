@@ -39,7 +39,7 @@
 
                                 @if($transaction->from === $myAccount->acc_number and $transaction->type === 'Investment Buy')
                                     <tr>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->senderAcc->user->name}} {{$transaction->senderAcc->user->surname}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600"></td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->type}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$myAccount->acc_number}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-red-600">
@@ -50,7 +50,7 @@
 
                                 @if($transaction->to === $myAccount->acc_number and $transaction->type === 'Investment Sell')
                                     <tr>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->senderAcc->user->name}} {{$transaction->senderAcc->user->surname}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600"></td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->type}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$myAccount->acc_number}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">

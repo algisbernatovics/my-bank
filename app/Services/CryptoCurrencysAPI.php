@@ -15,6 +15,7 @@ class CryptoCurrencysAPI
         $this->investmentAccount = $investmentAccount;
 
         $url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
+
         $parameters = [
             'start' => '1',
             'limit' => $_ENV['CRYPTO_API_LIMIT'],

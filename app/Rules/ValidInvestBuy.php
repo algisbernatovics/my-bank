@@ -18,7 +18,7 @@ class ValidInvestBuy implements Rule
     public function __construct(Account $investmentAccount, float $price, string $symbol, float $amount)
     {
         $this->investmentAccount = $investmentAccount;
-        $this->investmentAccountFunds = (new AccountBalance($investmentAccount->acc_number))->getBalance();
+        $this->investmentAccountFunds = $investmentAccount->balance();
         $this->amount = $amount;
         $this->investmentAccountCurrency = $investmentAccount->currency;
         $this->symbol = $symbol;
