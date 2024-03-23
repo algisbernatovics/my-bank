@@ -21,7 +21,7 @@
                                         value="{{$account['acc_number']}}" {{ old('sourceAccount') == $account['acc_number'] ? 'selected' : '' }}>
                                         {{$account['acc_number']}}
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        Balance:{{round($account['balance'] / 100,2)}}
+                                        Balance:{{round($account['balance'],2)}}
                                         {{$account['currency']}}
                                     </option>
                                 @endforeach

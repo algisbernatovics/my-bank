@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Rules\ValidInvestBuy;
 use App\Rules\ValidInvestSell;
-use App\Services\AccountBalance;
 use App\Services\BuyInvestment;
 use App\Services\CryptoCurrencysAPI;
 use App\Services\SellInvestment;
@@ -29,13 +28,13 @@ class InvestmentController extends Controller
 
             foreach ($accounts as $account) {
 
-                $balance = new AccountBalance($account->acc_number);
+                $balance = $account->balance();
                 $userInvestmentAccounts[] = Collect
                 ([
                     'acc_number' => $account->acc_number,
                     'currency' => $account->currency,
                     'type' => $account->type,
-                    'balance' => $balance->getBalance()
+                    'balance' => $balance
                 ])->toArray();
             }
             return view('investments.selectAccount',
