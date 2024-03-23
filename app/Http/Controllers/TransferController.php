@@ -8,7 +8,6 @@ use App\Rules\ValidNameSurnameAtTransfer;
 use App\Rules\ValidPersonalCodeAtTransfer;
 use App\Rules\ValidTargetAccount;
 use App\Rules\ValidTransferAmount;
-use App\Services\AccountBalance;
 use App\Services\Transfer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,13 +27,13 @@ class TransferController extends Controller
                 ->get();
 
             foreach ($accounts as $account) {
-                $funds = new AccountBalance($account->acc_number);
+
                 $userBankAccounts[] = Collect
                 ([
                     'acc_number' => $account->acc_number,
                     'currency' => $account->currency,
                     'type' => $account->type,
-                    'balance' => $funds->getBalance()
+                    'balance' => $account->balance()
                 ])->toArray();
 
             }

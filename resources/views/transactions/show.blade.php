@@ -37,60 +37,60 @@
 
                             @foreach($transactions as $transaction)
 
-                                @if($transaction['account_from'] === $myAccount->acc_number and $transaction['type'] === 'Investment Buy')
+                                @if($transaction->from === $myAccount->acc_number and $transaction->type === 'Investment Buy')
                                     <tr>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction['user_to']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction['type']}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->senderAcc->user->name}} {{$transaction->senderAcc->user->surname}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->type}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$myAccount->acc_number}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-red-600">
-                                            -{{$transaction['transfer_amount'] / 100}}{{$myAccount->currency}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction['created_at']}}</td>
+                                            -{{$transaction->transfer_amount / 100}}{{$myAccount->currency}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->created_at}}</td>
                                     </tr>
                                 @endif
 
-                                @if($transaction['account_to'] === $myAccount->acc_number and $transaction['type'] === 'Investment Sell')
+                                @if($transaction->to === $myAccount->acc_number and $transaction->type === 'Investment Sell')
                                     <tr>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['user_to']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['type']}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->senderAcc->user->name}} {{$transaction->senderAcc->user->surname}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->type}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$myAccount->acc_number}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">
                                             +{{$transaction['converted_amount'] / 100}}{{$myAccount->currency}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['created_at']}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->created_at}}</td>
                                     </tr>
                                 @endif
 
-                                @if($transaction['account_to'] === $myAccount->acc_number and $transaction['type'] === 'ATM Deposit')
+                                @if($transaction->to === $myAccount->acc_number and $transaction->type === 'ATM Deposit')
                                     <tr>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['user_to']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['type']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['account_to']}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600"></td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->type}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->to}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">
-                                            +{{$transaction['converted_amount'] / 100}}{{$myAccount->currency}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['created_at']}}</td>
+                                            +{{$transaction->converted_amount / 100}}{{$myAccount->currency}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->created_at}}</td>
                                     </tr>
                                 @endif
 
-                                @if($transaction['account_from'] === $myAccount->acc_number and $transaction['type'] === 'Transfer')
+                                @if($transaction->from === $myAccount->acc_number and $transaction->type === 'Transfer')
                                     <tr>
                                         <td class="py-2 px-4 border-b border-gray-200 text-red-600">
-                                            To {{$transaction['user_to']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction['type']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction['account_to']}}</td>
+                                            {{$transaction->senderAcc->user->name}} {{$transaction->senderAcc->user->surname}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->type}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->to}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-red-600">
-                                            -{{$transaction['transfer_amount'] / 100}}{{$myAccount->currency}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction['created_at']}}</td>
+                                            -{{$transaction->transfer_amount / 100}}{{$myAccount->currency}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-red-600">{{$transaction->created_at}}</td>
                                     </tr>
                                 @endif
 
-                                @if($transaction['account_to'] === $myAccount->acc_number and $transaction['type'] === 'Transfer')
+                                @if($transaction->to === $myAccount->acc_number and $transaction->type === 'Transfer')
                                     <tr>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">
-                                            From {{$transaction['user_from']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['type']}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['account_from']}}</td>
+                                            {{$transaction->receiverAcc->user->name}} {{$transaction->receiverAcc->user->surname}}
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->type}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->from}}</td>
                                         <td class="py-2 px-4 border-b border-gray-200 text-green-600">
-                                            +{{$transaction['converted_amount'] / 100}}{{$myAccount->currency}}</td>
-                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction['created_at']}}</td>
+                                            +{{$transaction->converted_amount / 100}}{{$myAccount->currency}}</td>
+                                        <td class="py-2 px-4 border-b border-gray-200 text-green-600">{{$transaction->created_at}}</td>
                                     </tr>
                                 @endif
                             @endforeach

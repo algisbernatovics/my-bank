@@ -3,7 +3,6 @@
 namespace App\Rules;
 
 use App\Models\Account;
-use App\Services\AccountBalance;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidTransferAmount implements Rule
@@ -15,7 +14,7 @@ class ValidTransferAmount implements Rule
     public function __construct(Account $targetAccount)
     {
         $this->targetAccount = $targetAccount;
-        $this->targetAccountFunds = ((new AccountBalance($targetAccount->acc_number))->getBalance()) / 100;
+        $this->targetAccountFunds = (($targetAccount->balance()));
         $this->targetAccountCurrency = $targetAccount->currency;
     }
 

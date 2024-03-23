@@ -31,7 +31,7 @@
                                         </div>
                                     </th>
                                     <td class="px-6 py-4">{{$account->type}}</td>
-                                    <td class="px-6 py-4">{{round($account->balance() / 100, 2)}}{{$account->currency}}</td>
+                                    <td class="px-6 py-4">{{round($account->balance(), 2)}}{{$account->currency}}</td>
                                     <td class="px-6 py-4">
                                         @if($account->balance() == 0)
                                             <form method="POST" action="/accounts/delete">@csrf

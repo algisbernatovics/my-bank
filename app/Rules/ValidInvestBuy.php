@@ -27,7 +27,7 @@ class ValidInvestBuy implements Rule
 
     public function passes($attribute, $value): bool
     {
-        return $this->inTotal > 0 && $this->inTotal <= $this->investmentAccountFunds / 100;
+        return $this->inTotal > 0 && $this->inTotal <= $this->investmentAccountFunds;
     }
 
     public function message(): string

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Transaction;
-use App\Models\User;
 use App\Rules\ValidAccountToDelete;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -51,72 +50,13 @@ class AccountsController extends Controller
 
     public function showTransactions(string $acc_number): view
     {
+        $account = Account::where('acc_number', $acc_number)->firstOrFail();
+        $transactions = $account->getAllTransactions();
+        $myAccount = Account::where('acc_number', '=', $acc_number)
+            ->first();
 
-        $independencysExist = Transaction::where('from', '=', $acc_number)
-            ->exists();
+        return view('transactions.show', ['transactions' => $transactions, 'myAccount' => $myAccount]);
 
-        $expensesExist = Transaction::where('to', '=', $acc_number)
-            ->exists();
-
-        if ($independencysExist or $expensesExist) {
-
-            $independencys = Transaction::where('from', '=', $acc_number)
-                ->get();
-
-            $expenses = Transaction::where('to', '=', $acc_number)
-                ->get();
-
-            $transactions = $independencys
-                ->merge($expenses)
-                ->sortBy('created_at')
-                ->reverse();
-
-            $myAccount = Account::where('acc_number', '=', $acc_number)
-                ->first();
-
-            foreach ($transactions as $transaction) {
-
-                $accFrom = Account::where('acc_number', '=', $transaction->from)
-                    ->first();
-
-                $existAccount = Account::where('acc_number', '=', $transaction->from)
-                    ->exists();
-
-                if ($existAccount) {
-                    $userFrom = User::where('id', '=', $accFrom->user_id)
-                        ->first();
-
-                } else $userFrom = Auth::user();
-
-                $existAccount = Account::where('acc_number', '=', $transaction->to)
-                    ->exists();
-
-                $transactionTargetAcc = Account::where('acc_number', '=', $transaction->to)
-                    ->first();
-
-                if ($existAccount) {
-
-                    $transactionTargetAccUser = User::where('id', '=', $transactionTargetAcc->user_id)
-                        ->first();
-                } else $transactionTargetAccUser = Auth::user();
-
-                $transactionsHistory[] = collect([
-
-                    'user_from' => $userFrom->name . ' ' . $userFrom->surname,
-                    'user_to' => $transactionTargetAccUser->name . ' ' . $transactionTargetAccUser->surname,
-                    'account_from' => $transaction->from,
-                    'account_to' => $transaction->to,
-                    'transfer_amount' => $transaction->transfer_amount,
-                    'converted_amount' => $transaction->converted_amount,
-                    'type' => $transaction->type,
-                    'created_at' => $transaction->created_at,
-
-                ])->toArray();
-
-            }
-            return view('transactions.show', ['transactions' => $transactionsHistory, 'myAccount' => $myAccount]);
-        }
-        return view('transactions.show');
     }
 
     public function deleteAccount(Request $request): RedirectResponse
