@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use App\Services\AccountInvestments;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -13,7 +13,7 @@ class ValidInvestSell implements Rule
 
     protected float $amount;
 
-    public function __construct(Accounts $investmentAccount, string $symbol, float $amount)
+    public function __construct(Account $investmentAccount, string $symbol, float $amount)
     {
         $this->amount = $amount;
         $this->investmentAccount = $investmentAccount;

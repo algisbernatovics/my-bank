@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use App\Rules\Valid2FaCode;
 use App\Rules\ValidNameSurnameAtTransfer;
 use App\Rules\ValidPersonalCodeAtTransfer;
@@ -19,12 +19,12 @@ class TransferController extends Controller
 {
     public function showTransfer(): view
     {
-        $existAccounts = Accounts::where('user_id', '=', Auth::user()['id'])
+        $existAccounts = Account::where('user_id', '=', Auth::user()['id'])
             ->exists();
 
         if ($existAccounts) {
 
-            $accounts = Accounts::where('user_id', '=', Auth::user()['id'])
+            $accounts = Account::where('user_id', '=', Auth::user()['id'])
                 ->get();
 
             foreach ($accounts as $account) {
@@ -45,7 +45,7 @@ class TransferController extends Controller
 
     public function transferMoney(Request $request): RedirectResponse
     {
-        $sourceAccount = Accounts::where('acc_number', '=', $request->sourceAccount)
+        $sourceAccount = Account::where('acc_number', '=', $request->sourceAccount)
             ->first();
 
         $request->validate([

@@ -2,20 +2,20 @@
 
 namespace App\Rules;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use App\Services\AccountBalance;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidInvestBuy implements Rule
 {
-    protected Accounts $investmentAccount;
+    protected Account $investmentAccount;
     protected float $investmentAccountFunds;
     protected string $investmentAccountCurrency;
     protected string $symbol;
     protected float $amount;
     protected float $inTotal;
 
-    public function __construct(Accounts $investmentAccount, float $price, string $symbol, float $amount)
+    public function __construct(Account $investmentAccount, float $price, string $symbol, float $amount)
     {
         $this->investmentAccount = $investmentAccount;
         $this->investmentAccountFunds = (new AccountBalance($investmentAccount->acc_number))->getBalance();

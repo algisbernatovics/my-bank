@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -17,12 +17,12 @@ class ValidNameSurnameAtTransfer implements Rule
 
     public function passes($attribute, $value): bool
     {
-        $targetAccountExist = Accounts::where('acc_number', '=', $this->targetAccountNumber)
+        $targetAccountExist = Account::where('acc_number', '=', $this->targetAccountNumber)
             ->exists();
 
         if ($targetAccountExist) {
 
-            $targetAccount = Accounts::where('acc_number', '=', $this->targetAccountNumber)
+            $targetAccount = Account::where('acc_number', '=', $this->targetAccountNumber)
                 ->first();
 
             $targetAccountUser = User::where('id', '=', $targetAccount->user_id)

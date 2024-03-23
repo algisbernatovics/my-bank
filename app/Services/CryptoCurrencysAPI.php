@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use GuzzleHttp\Client;
 
 class CryptoCurrencysAPI
 {
     protected array $response;
-    protected Accounts $investmentAccount;
+    protected Account $investmentAccount;
 
-    public function __construct(Accounts $investmentAccount)
+    public function __construct(Account $investmentAccount)
     {
         $this->investmentAccount = $investmentAccount;
 

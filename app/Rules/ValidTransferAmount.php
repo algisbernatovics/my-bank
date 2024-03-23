@@ -2,17 +2,17 @@
 
 namespace App\Rules;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use App\Services\AccountBalance;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidTransferAmount implements Rule
 {
-    protected Accounts $targetAccount;
+    protected Account $targetAccount;
     protected float $targetAccountFunds;
     protected string $targetAccountCurrency;
 
-    public function __construct(Accounts $targetAccount)
+    public function __construct(Account $targetAccount)
     {
         $this->targetAccount = $targetAccount;
         $this->targetAccountFunds = ((new AccountBalance($targetAccount->acc_number))->getBalance()) / 100;

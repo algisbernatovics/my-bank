@@ -100,7 +100,7 @@
                 {{ __('Home') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('accounts')" :active="request()->routeIs('accounts')">
-                {{ __('Accounts') }}
+                {{ __('Account') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('accounts.create')" :active="request()->routeIs('accounts.create')">
                 {{ __('Create new account') }}

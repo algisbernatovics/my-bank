@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use App\Models\Investments;
-use App\Models\Transactions;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class BuyInvestment
@@ -13,10 +13,10 @@ class BuyInvestment
     {
         $inTotal = $request->amount * $price * 100;
 
-        $sourceAccount = Accounts::where('acc_number', '=', $acc_number)
+        $sourceAccount = Account::where('acc_number', '=', $acc_number)
             ->first();
 
-        $transaction = new Transactions();
+        $transaction = new Transaction();
         $transaction->from = $sourceAccount->acc_number;
         $transaction->to = NULL;
         $transaction->transfer_amount = $inTotal;

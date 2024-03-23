@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use App\Rules\ValidInvestBuy;
 use App\Rules\ValidInvestSell;
 use App\Services\AccountBalance;
@@ -18,12 +18,12 @@ class InvestmentController extends Controller
 {
     public function showInvestmentAccounts(): view
     {
-        $existInvestmentAccounts = Accounts::where('user_id', '=', Auth::user()['id'])
+        $existInvestmentAccounts = Account::where('user_id', '=', Auth::user()['id'])
             ->where('type', '=', 'Investment')
             ->exists();
 
         if ($existInvestmentAccounts) {
-            $accounts = Accounts::where('user_id', '=', Auth::user()['id'])
+            $accounts = Account::where('user_id', '=', Auth::user()['id'])
                 ->where('type', '=', 'Investment')
                 ->get();
 
@@ -48,12 +48,12 @@ class InvestmentController extends Controller
 
     public function showCrypto(string $acc_number): view
     {
-        $accountExist = Accounts::where('acc_number', '=', $acc_number)
+        $accountExist = Account::where('acc_number', '=', $acc_number)
             ->exists();
 
         if ($accountExist) {
 
-            $investmentAccount = Accounts::where('acc_number', '=', $acc_number)
+            $investmentAccount = Account::where('acc_number', '=', $acc_number)
                 ->first();
 
             $cryptoCurrencys = (new CryptoCurrencysAPI($investmentAccount))->getCryptoCurrencys();
@@ -69,7 +69,7 @@ class InvestmentController extends Controller
 
     public function buy(string $acc_number, string $symbol, Request $request): RedirectResponse
     {
-        $investmentAccount = Accounts::where('acc_number', '=', $acc_number)
+        $investmentAccount = Account::where('acc_number', '=', $acc_number)
             ->first();
 
         $cryptoCurrencys = (new CryptoCurrencysAPI($investmentAccount))->getCryptoCurrencys();
@@ -92,7 +92,7 @@ class InvestmentController extends Controller
 
     public function sell(string $acc_number, string $symbol, Request $request): RedirectResponse
     {
-        $investmentAccount = Accounts::where('acc_number', '=', $acc_number)
+        $investmentAccount = Account::where('acc_number', '=', $acc_number)
             ->first();
 
         $cryptoCurrencys = (new CryptoCurrencysAPI($investmentAccount))->getCryptoCurrencys();

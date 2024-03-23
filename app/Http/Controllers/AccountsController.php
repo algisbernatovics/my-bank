@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accounts;
-use App\Models\Transactions;
+use App\Models\Account;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Rules\ValidAccountToDelete;
-use App\Services\AccountBalance;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,24 +15,10 @@ class AccountsController extends Controller
 {
     public function showAccounts(): View
     {
-        $existAccounts = Accounts::where('user_id', '=', Auth::user()['id'])->exists();
+        $user = Auth::user();
+        $accounts = $user->accounts;
 
-        if ($existAccounts) {
-            $accounts = Accounts::where('user_id', '=', Auth::user()['id'])->get();
-
-            foreach ($accounts as $account) {
-                $funds = new AccountBalance($account->acc_number);
-                $userBankAccounts[] = Collect
-                ([
-                    'acc_number' => $account->acc_number,
-                    'currency' => $account->currency,
-                    'type' => $account->type,
-                    'balance' => $funds->getBalance()
-                ])->toArray();
-            }
-            return view('accounts.show', ['accounts' => $userBankAccounts]);
-        }
-        return view('accounts.show');
+        return view('accounts.show', ['accounts' => $accounts]);
     }
 
     public function createAccountForm(): view
@@ -44,18 +29,18 @@ class AccountsController extends Controller
     public function createAccount(Request $request): RedirectResponse
     {
         sleep(1);
-        $newAccountNumber = strtoupper(md5(Auth::user()['personal_code'] . date('r') . time()));
-        $account = new Accounts();
-        $account->user_id = Auth::user()['id'];
+
+        $newAccountNumber = strtoupper(md5(Auth::user()->personal_code . date('r') . time()));
+
+        $account = new Account();
+        $account->user_id = Auth::id();
         $account->currency = $request->currency;
         $account->type = $request->type;
         $account->acc_number = $newAccountNumber;
         $account->save();
 
-        $transaction = new Transactions();
-        $transaction->from = NULL;
+        $transaction = new Transaction();
         $transaction->to = $newAccountNumber;
-        $transaction->transfer_amount = 0;
         $transaction->converted_amount = 5000000;
         $transaction->type = 'ATM Deposit';
         $transaction->save();
@@ -63,21 +48,22 @@ class AccountsController extends Controller
         return redirect("/account/transactions/$newAccountNumber");
     }
 
+
     public function showTransactions(string $acc_number): view
     {
 
-        $independencysExist = Transactions::where('from', '=', $acc_number)
+        $independencysExist = Transaction::where('from', '=', $acc_number)
             ->exists();
 
-        $expensesExist = Transactions::where('to', '=', $acc_number)
+        $expensesExist = Transaction::where('to', '=', $acc_number)
             ->exists();
 
         if ($independencysExist or $expensesExist) {
 
-            $independencys = Transactions::where('from', '=', $acc_number)
+            $independencys = Transaction::where('from', '=', $acc_number)
                 ->get();
 
-            $expenses = Transactions::where('to', '=', $acc_number)
+            $expenses = Transaction::where('to', '=', $acc_number)
                 ->get();
 
             $transactions = $independencys
@@ -85,15 +71,15 @@ class AccountsController extends Controller
                 ->sortBy('created_at')
                 ->reverse();
 
-            $myAccount = Accounts::where('acc_number', '=', $acc_number)
+            $myAccount = Account::where('acc_number', '=', $acc_number)
                 ->first();
 
             foreach ($transactions as $transaction) {
 
-                $accFrom = Accounts::where('acc_number', '=', $transaction->from)
+                $accFrom = Account::where('acc_number', '=', $transaction->from)
                     ->first();
 
-                $existAccount = Accounts::where('acc_number', '=', $transaction->from)
+                $existAccount = Account::where('acc_number', '=', $transaction->from)
                     ->exists();
 
                 if ($existAccount) {
@@ -102,10 +88,10 @@ class AccountsController extends Controller
 
                 } else $userFrom = Auth::user();
 
-                $existAccount = Accounts::where('acc_number', '=', $transaction->to)
+                $existAccount = Account::where('acc_number', '=', $transaction->to)
                     ->exists();
 
-                $transactionTargetAcc = Accounts::where('acc_number', '=', $transaction->to)
+                $transactionTargetAcc = Account::where('acc_number', '=', $transaction->to)
                     ->first();
 
                 if ($existAccount) {
@@ -140,7 +126,7 @@ class AccountsController extends Controller
             'acc_number' => [new ValidAccountToDelete()],
         ]);
 
-        Accounts::where('acc_number', '=', $request->acc_number)->delete();
+        Account::where('acc_number', '=', $request->acc_number)->delete();
 
         return back();
     }

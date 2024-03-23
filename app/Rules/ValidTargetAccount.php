@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidTargetAccount implements Rule
@@ -17,7 +17,7 @@ class ValidTargetAccount implements Rule
     public function passes($attribute, $value): bool
     {
         $notSame = ($value !== $this->sourceAccount);
-        $exist = Accounts::where('acc_number', '=', $value)
+        $exist = Account::where('acc_number', '=', $value)
             ->exists();
 
         return ($notSame and $exist);

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Accounts;
-use App\Models\Transactions;
+use App\Models\Account;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class Transfer
@@ -13,10 +13,10 @@ class Transfer
 
         $amountOfFunds = intval($request->amountOfFunds * 100);
 
-        $targetAccount = Accounts::where('acc_number', '=', $request->targetAccount)
+        $targetAccount = Account::where('acc_number', '=', $request->targetAccount)
             ->first();
 
-        $sourceAccount = Accounts::where('acc_number', '=', $request->sourceAccount)
+        $sourceAccount = Account::where('acc_number', '=', $request->sourceAccount)
             ->first();
 
         $converted = (new CurrencyConvertAPI())->execute
@@ -26,7 +26,7 @@ class Transfer
             $sourceAccount->currency
         );
 
-        $transaction = new Transactions();
+        $transaction = new Transaction();
 
         $transaction->from = $request->sourceAccount;
         $transaction->to = $request->targetAccount;
