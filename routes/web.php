@@ -32,18 +32,16 @@ Route::get('/settings', function () {
     return (new SettingsController())->showSettings();
 })->middleware(['auth'])->name('settings');
 
+
 Route::get('/accounts', function () {
-    return (new AccountsController())->showAccounts();
+    return (new AccountsController())->show();
 })->middleware(['auth'])->name('accounts');
-
-Route::post('/accounts/create', function (Request $request) {
-    return (new AccountsController())->createAccount($request);
-})->middleware(['auth'])->name('accounts.create');
-
 Route::get('/accounts/create', function () {
-    return (new AccountsController())->createAccountForm();
+    return (new AccountsController())->create();
 })->middleware(['auth'])->name('accounts.create');
-
+Route::post('/accounts/create', function (Request $request) {
+    return (new AccountsController())->create($request);
+})->middleware(['auth'])->name('accounts.create');
 Route::post('/accounts/delete', function (Request $request) {
     return (new AccountsController())->deleteAccount($request);
 })->middleware(['auth'])->name('accounts.delete');

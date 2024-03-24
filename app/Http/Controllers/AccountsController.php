@@ -12,7 +12,7 @@ use Illuminate\View\View;
 
 class AccountsController extends Controller
 {
-    public function showAccounts(): View
+    public function show(): View
     {
         $user = Auth::user();
         $accounts = $user->accounts;
@@ -20,31 +20,36 @@ class AccountsController extends Controller
         return view('accounts.show', ['accounts' => $accounts]);
     }
 
-    public function createAccountForm(): view
+    public function create(Request $request = null): view|RedirectResponse
     {
+
+        if ($request !== null && $request->has('type')) {
+            sleep(1);
+
+            $newAccountNumber = strtoupper(md5(Auth::user()->personal_code . date('r') . time()));
+
+            $account = new Account();
+            $account->user_id = Auth::id();
+            $account->currency = $request->currency;
+            $account->type = $request->type;
+            $account->acc_number = $newAccountNumber;
+            $account->save();
+
+            $this->demoDeposit($newAccountNumber);
+
+            return redirect("/account/transactions/$newAccountNumber");
+        }
+
         return view('accounts.create');
     }
 
-    public function createAccount(Request $request): RedirectResponse
+    private function demoDeposit($newAccountNumber)
     {
-        sleep(1);
-
-        $newAccountNumber = strtoupper(md5(Auth::user()->personal_code . date('r') . time()));
-
-        $account = new Account();
-        $account->user_id = Auth::id();
-        $account->currency = $request->currency;
-        $account->type = $request->type;
-        $account->acc_number = $newAccountNumber;
-        $account->save();
-
         $transaction = new Transaction();
         $transaction->to = $newAccountNumber;
         $transaction->converted_amount = 5000000;
         $transaction->type = 'ATM Deposit';
         $transaction->save();
-
-        return redirect("/account/transactions/$newAccountNumber");
     }
 
 

@@ -10,11 +10,9 @@ class ValidAccountToDelete implements Rule
 {
     public function passes($attribute, $value): bool
     {
-        $existAccount = Account::where('acc_number', '=', $value)
-            ->exists();
-        if ($existAccount) {
-            $balance = (new AccountBalance($value))->getBalance();
-        }
+        $account = Account::where('acc_number', $value)->first();
+        $balance = $account->balance();
+
         return ($balance == 0);
     }
 
