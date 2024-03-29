@@ -10,7 +10,7 @@
             <div class="" style="max-width: 1000px;">
                 <div class="overflow-x-auto">
 
-                    @if(isset($userInvestmentAccounts))
+                    @if(isset($investmentAccounts))
 
                         <table
                             class="w-3/4 mx-auto  text-sm text-left text-gray-500 dark:text-gray-400 animate-fade-in">
@@ -32,20 +32,20 @@
                             </thead>
                             <tbody>
 
-                            @foreach($userInvestmentAccounts as $account)
+                            @foreach($investmentAccounts as $account)
 
                                 <tr class="bg-white border">
                                     <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap dark:text-white">
                                         <div class="map">
-                                            <a href="investments/{{$account['acc_number']}}"
+                                            <a href="investments/{{$account->acc_number}}"
                                                class="animate-fade-in">
-                                                {{$account['acc_number']}}
+                                                {{$account->acc_number}}
                                             </a>
                                         </div>
                                     </th>
 
                                     <td class="px-6 py-4">
-                                        {{round($account['balance'],2)}}{{$account['currency']}}
+                                        {{round($account->balance())}}{{$account->currency}}
                                     </td>
                                     <td class="px-6 py-4">
 
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    @if(!isset($userInvestmentAccounts))
+    @if(!isset($investmentAccounts))
         <div class="py-12">
             <div class="container mx-auto py-8 flex justify-center">
                 <p class="">

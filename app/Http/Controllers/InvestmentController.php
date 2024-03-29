@@ -17,32 +17,14 @@ class InvestmentController extends Controller
 {
     public function showInvestmentAccounts(): view
     {
-        $existInvestmentAccounts = Account::where('user_id', '=', Auth::user()['id'])
-            ->where('type', '=', 'Investment')
-            ->exists();
+        $user = Auth::user();
+        $investmentAccounts = $user->investmentAccounts;
 
-        if ($existInvestmentAccounts) {
-            $accounts = Account::where('user_id', '=', Auth::user()['id'])
-                ->where('type', '=', 'Investment')
-                ->get();
+        return view('investments.selectAccount',
+            [
+                'investmentAccounts' => $investmentAccounts
+            ]);
 
-            foreach ($accounts as $account) {
-
-                $balance = $account->balance();
-                $userInvestmentAccounts[] = Collect
-                ([
-                    'acc_number' => $account->acc_number,
-                    'currency' => $account->currency,
-                    'type' => $account->type,
-                    'balance' => $balance
-                ])->toArray();
-            }
-            return view('investments.selectAccount',
-                [
-                    'userInvestmentAccounts' => $userInvestmentAccounts
-                ]);
-        }
-        return view('investments.selectAccount');
     }
 
     public function showCrypto(string $acc_number): view

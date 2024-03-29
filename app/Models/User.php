@@ -34,4 +34,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Account::class);
     }
+    public function investmentAccounts()
+    {
+        return $this->hasMany(Account::class)->where('type', 'Investment');
+    }
 }
