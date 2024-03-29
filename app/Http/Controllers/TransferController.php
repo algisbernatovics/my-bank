@@ -18,28 +18,11 @@ class TransferController extends Controller
 {
     public function show(): view
     {
-        $existAccounts = Account::where('user_id', '=', Auth::user()['id'])
-            ->exists();
+        $user = Auth::user();
+        $accounts = $user->accounts;
 
-        if ($existAccounts) {
+        return view('transactions.create', ['accounts' => $accounts]);
 
-            $accounts = Account::where('user_id', '=', Auth::user()['id'])
-                ->get();
-
-            foreach ($accounts as $account) {
-
-                $userBankAccounts[] = Collect
-                ([
-                    'acc_number' => $account->acc_number,
-                    'currency' => $account->currency,
-                    'type' => $account->type,
-                    'balance' => $account->balance()
-                ])->toArray();
-
-            }
-            return view('transactions.create', ['accounts' => $userBankAccounts]);
-        }
-        return view('transactions.create');
     }
 
     public function process(Request $request): RedirectResponse

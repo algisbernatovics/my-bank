@@ -45,7 +45,7 @@
                                     </th>
 
                                     <td class="px-6 py-4">
-                                        {{round($account->balance())}}{{$account->currency}}
+                                        {{$account->balance()}}{{$account->currency}}
                                     </td>
                                     <td class="px-6 py-4">
 

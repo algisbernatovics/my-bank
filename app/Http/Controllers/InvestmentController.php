@@ -20,11 +20,10 @@ class InvestmentController extends Controller
         $user = Auth::user();
         $investmentAccounts = $user->investmentAccounts;
 
-        return view('investments.selectAccount',
+        return view('investments.list',
             [
                 'investmentAccounts' => $investmentAccounts
             ]);
-
     }
 
     public function show(string $acc_number): view
@@ -39,7 +38,6 @@ class InvestmentController extends Controller
                 'cryptoCurrencys' => $cryptoCurrencys,
                 'investmentAccount' => $investmentAccount
             ]);
-
     }
 
     public function buy(string $acc_number, string $symbol, Request $request): RedirectResponse
@@ -61,7 +59,6 @@ class InvestmentController extends Controller
         ]);
 
         (new BuyInvestment())->execute($request, $price, $symbol, $acc_number);
-
         return back();
     }
 

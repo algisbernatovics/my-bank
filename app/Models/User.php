@@ -38,4 +38,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Account::class)->where('type', 'Investment');
     }
+    public function standardAccounts()
+    {
+        return $this->hasMany(Account::class)->where('type', 'Standard');
+    }
 }

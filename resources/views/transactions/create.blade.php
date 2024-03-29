@@ -18,10 +18,10 @@
 
                                 @foreach($accounts as $account)
                                     <option
-                                        value="{{$account['acc_number']}}" {{ old('sourceAccount') == $account['acc_number'] ? 'selected' : '' }}>
-                                        {{$account['acc_number']}}
+                                        value="{{$account->acc_number}}" {{ old('sourceAccount') == $account->acc_number ? 'selected' : '' }}>
+                                        {{$account->acc_number}}
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        Balance:{{round($account['balance'],2)}}
+                                        Balance:{{$account->balance()}}
                                         {{$account['currency']}}
                                     </option>
                                 @endforeach
