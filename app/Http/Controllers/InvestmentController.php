@@ -29,23 +29,17 @@ class InvestmentController extends Controller
 
     public function showCrypto(string $acc_number): view
     {
-        $accountExist = Account::where('acc_number', '=', $acc_number)
-            ->exists();
+        $investmentAccount = Account::where('acc_number', '=', $acc_number)
+            ->first();
 
-        if ($accountExist) {
+        $cryptoCurrencys = (new CryptoCurrencysAPI($investmentAccount))->getCryptoCurrencys();
 
-            $investmentAccount = Account::where('acc_number', '=', $acc_number)
-                ->first();
+        return view('investments.create',
+            [
+                'cryptoCurrencys' => $cryptoCurrencys,
+                'investmentAccount' => $investmentAccount
+            ]);
 
-            $cryptoCurrencys = (new CryptoCurrencysAPI($investmentAccount))->getCryptoCurrencys();
-
-            return view('investments.create',
-                [
-                    'cryptoCurrencys' => $cryptoCurrencys,
-                    'investmentAccount' => $investmentAccount
-                ]);
-        }
-        return view('investments.create');
     }
 
     public function buy(string $acc_number, string $symbol, Request $request): RedirectResponse

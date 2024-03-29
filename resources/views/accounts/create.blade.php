@@ -9,7 +9,7 @@
         <div
             class="max-w-7xl mx-auto sm:flex-1 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg animate-fade-in">
             <div class="pt-8 inline-block">
-                <form method="POST" action="{{ route('accounts.create') }}">@csrf
+                <form method="POST" action="{{ route('accounts.store') }}">@csrf
                     <div class="pt-8">
                         <label for="currency">Choose Your Currency:</label><br>
                         <select class="sm:items-center sm:rounded-lg" id="cars" name="currency">

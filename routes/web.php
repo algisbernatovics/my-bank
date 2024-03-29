@@ -34,26 +34,23 @@ Route::get('/settings', function () {
 
 
 Route::get('/accounts', function () {
-    return (new AccountsController())->show();
-})->middleware(['auth'])->name('accounts');
+    return (new AccountsController())->list();})->middleware(['auth'])->name('accounts');
 Route::get('/accounts/create', function () {
     return (new AccountsController())->create();
 })->middleware(['auth'])->name('accounts.create');
-Route::post('/accounts/create', function (Request $request) {
-    return (new AccountsController())->create($request);
-})->middleware(['auth'])->name('accounts.create');
+Route::post('/accounts/store', function (Request $request) {
+    return (new AccountsController())->store($request);
+})->middleware(['auth'])->name('accounts.store');
 Route::post('/accounts/delete', function (Request $request) {
     return (new AccountsController())->deleteAccount($request);
 })->middleware(['auth'])->name('accounts.delete');
-
 Route::get('/account/transactions/{acc_number}', function (string $acc_number) {
-    return (new AccountsController())->showTransactions($acc_number);
+    return (new AccountsController())->show($acc_number);
 })->middleware(['auth'])->name('transactions');
 
 Route::get('/transfer', function () {
     return (new TransferController())->showTransfer();
 })->middleware(['auth'])->name('transfer');
-
 Route::post('/transfer', function (Request $request) {
     return (new TransferController())->transferMoney($request);
 })->middleware(['auth'])->name('transfer');
@@ -61,15 +58,12 @@ Route::post('/transfer', function (Request $request) {
 Route::get('/investmentAccounts', function () {
     return (new InvestmentController())->showInvestmentAccounts();
 })->middleware(['auth'])->name('investmentAccounts');
-
 Route::post('/investments/{acc_number}/sell/{symbol}', function (string $acc_number, string $symbol, Request $request) {
     return (new InvestmentController())->sell($acc_number, $symbol, $request);
 })->middleware(['auth'])->name('investments.sell');
-
 Route::post('/investments/{acc_number}/buy/{symbol}', function (string $acc_number, string $symbol, Request $request) {
     return (new InvestmentController())->buy($acc_number, $symbol, $request);
 })->middleware(['auth'])->name('investments.buy');
-
 Route::get('/investments/{acc_number}', function (string $acc_number) {
     return (new InvestmentController())->showCrypto($acc_number);
 })->middleware(['auth'])->name('investments');
