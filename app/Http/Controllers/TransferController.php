@@ -16,7 +16,7 @@ use Illuminate\View\View;
 
 class TransferController extends Controller
 {
-    public function showTransfer(): view
+    public function show(): view
     {
         $existAccounts = Account::where('user_id', '=', Auth::user()['id'])
             ->exists();
@@ -42,7 +42,7 @@ class TransferController extends Controller
         return view('transactions.create');
     }
 
-    public function transferMoney(Request $request): RedirectResponse
+    public function process(Request $request): RedirectResponse
     {
         $sourceAccount = Account::where('acc_number', '=', $request->sourceAccount)
             ->first();

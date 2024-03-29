@@ -8,7 +8,7 @@
     @if(isset(Auth::user()['two_factor_confirmed_at']))
         @if(isset($accounts))
 
-            <form method="POST" action="{{ route('transfer') }}">@csrf
+            <form method="POST" action="{{ route('transfer.process') }}">@csrf
                 <div class="py-12">
                     <div
                         class="max-w-7xl mx-auto sm:flex-1 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg animate-fade-in">

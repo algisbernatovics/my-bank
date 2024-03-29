@@ -15,19 +15,20 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link href="/accounts">
+                    <x-nav-link :href="route('accounts')" :active="request()->routeIs('accounts')">
                         {{ __('My accounts') }}
                     </x-nav-link>
-                    <x-nav-link href="/accounts/create">
+                    <x-nav-link :href="route('accounts.create')" :active="request()->routeIs('accounts.create')">
                         {{ __('Create new account') }}
                     </x-nav-link>
-                    <x-nav-link href="/transfer">
+                    <x-nav-link :href="route('transfer.show')" :active="request()->routeIs('transfer.show')">
                         {{ __('Transfer') }}
                     </x-nav-link>
-                    <x-nav-link href="/investmentAccounts">
+                    <x-nav-link :href="route('investmentAccounts')" :active="request()->routeIs('investmentAccounts')">
                         {{ __('Investments') }}
                     </x-nav-link>
                 </div>
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -105,13 +106,13 @@
             <x-responsive-nav-link :href="route('accounts.create')" :active="request()->routeIs('accounts.create')">
                 {{ __('Create new account') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('transfer')" :active="request()->routeIs('transfer')">
+            <x-responsive-nav-link :href="route('transfer.show')" :active="request()->routeIs('transfer.show')">
                 {{ __('Transfer') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('investmentAccounts')"
-                                   :active="request()->routeIs('investmentAccounts')">
+            <x-responsive-nav-link :href="route('investmentAccounts')" :active="request()->routeIs('investmentAccounts')">
                 {{ __('Investments') }}
             </x-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->

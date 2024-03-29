@@ -49,11 +49,11 @@ Route::get('/account/transactions/{acc_number}', function (string $acc_number) {
 })->middleware(['auth'])->name('transactions');
 
 Route::get('/transfer', function () {
-    return (new TransferController())->showTransfer();
-})->middleware(['auth'])->name('transfer');
-Route::post('/transfer', function (Request $request) {
-    return (new TransferController())->transferMoney($request);
-})->middleware(['auth'])->name('transfer');
+    return (new TransferController())->show();
+})->middleware(['auth'])->name('transfer.show');
+Route::post('/transfer/process', function (Request $request) {
+    return (new TransferController())->process($request);
+})->middleware(['auth'])->name('transfer.process');
 
 Route::get('/investmentAccounts', function () {
     return (new InvestmentController())->showInvestmentAccounts();
