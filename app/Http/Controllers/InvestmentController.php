@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class InvestmentController extends Controller
 {
-    public function showInvestmentAccounts(): view
+    public function list(): view
     {
         $user = Auth::user();
         $investmentAccounts = $user->investmentAccounts;
@@ -27,7 +27,7 @@ class InvestmentController extends Controller
 
     }
 
-    public function showCrypto(string $acc_number): view
+    public function show(string $acc_number): view
     {
         $investmentAccount = Account::where('acc_number', '=', $acc_number)
             ->first();

@@ -56,7 +56,7 @@ Route::post('/transfer/process', function (Request $request) {
 })->middleware(['auth'])->name('transfer.process');
 
 Route::get('/investmentAccounts', function () {
-    return (new InvestmentController())->showInvestmentAccounts();
+    return (new InvestmentController())->list();
 })->middleware(['auth'])->name('investmentAccounts');
 Route::post('/investments/{acc_number}/sell/{symbol}', function (string $acc_number, string $symbol, Request $request) {
     return (new InvestmentController())->sell($acc_number, $symbol, $request);
@@ -65,7 +65,7 @@ Route::post('/investments/{acc_number}/buy/{symbol}', function (string $acc_numb
     return (new InvestmentController())->buy($acc_number, $symbol, $request);
 })->middleware(['auth'])->name('investments.buy');
 Route::get('/investments/{acc_number}', function (string $acc_number) {
-    return (new InvestmentController())->showCrypto($acc_number);
+    return (new InvestmentController())->show($acc_number);
 })->middleware(['auth'])->name('investments');
 
 ////////////////////////////////////////////////////
